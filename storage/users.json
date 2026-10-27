@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "username": "admin",
+        "password_hash": "$2y$10$jK0u4W6CRb7uet0uvzj51ugfNNeyBzlUHHupRUh4fPUINXRqG5cTG",
+        "role": "ADMIN",
+        "is_active": true
+    },
+    {
+        "id": 2,
+        "username": "operator",
+        "password_hash": "1234",
+        "role": "OPERATOR",
+        "is_active": true
+    }
+]
