@@ -1,9 +1,6 @@
 <?php
 
-session_start();
-
-require_once __DIR__ . '/../app/Helpers/Session.php';
-require_once __DIR__ . '/../app/Helpers/Security.php';
+require_once __DIR__ . '/../app/bootstrap.php';      // public/*.php
 
 Session::start();
 

@@ -1,12 +1,10 @@
-
 <?php
 
-require_once __DIR__ . '/../../app/Helpers/Session.php';
-require_once __DIR__ . '/../../app/Helpers/Security.php';
+require_once __DIR__ . '/../../app/bootstrap.php';   // public/cards/, public/transactions/
 require_once __DIR__ . '/../../app/Middleware/AuthMiddleware.php';
 require_once __DIR__ . '/../../app/Models/Transaction.php';
 
-AuthMiddleware::handle();
+AuthMiddleware::requirePermission(Permission::ViewTransactions);
 
 $query = $_GET['q'] ?? '';
 $status = $_GET['status'] ?? '';
@@ -54,12 +52,8 @@ $transactions = $transactionModel->search(
 
 $pageTitle = 'Transactions';
 
-require_once __DIR__ . '/../../views/layouts/sidebar.php';
-require_once __DIR__ . '/../../views/layouts/header.php';
-
+ob_start();
 ?>
-
-<main class="content">
 
     <div class="page-header">
         <div>
@@ -163,11 +157,7 @@ require_once __DIR__ . '/../../views/layouts/header.php';
 
                             <td>
                                 <strong>
-                                    <?= Security::escape(
-                                        substr($transaction['card_number'], 0, 6)
-                                        . '******'
-                                        . substr($transaction['card_number'], -4)
-                                    ) ?>
+                                    <?= Security::escape(Format::cardNumber($transaction['card_number'])) ?>
                                 </strong>
                             </td>
 
@@ -213,7 +203,6 @@ require_once __DIR__ . '/../../views/layouts/header.php';
 
     </div>
 
-</main>
-
-</body>
-</html>
+<?php
+$content = ob_get_clean();
+require __DIR__ . '/../../views/layouts/app.php';

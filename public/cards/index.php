@@ -1,11 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../../app/Helpers/Session.php';
-require_once __DIR__ . '/../../app/Helpers/Security.php';
+require_once __DIR__ . '/../../app/bootstrap.php';   // public/cards/, public/transactions/
 require_once __DIR__ . '/../../app/Middleware/AuthMiddleware.php';
 require_once __DIR__ . '/../../app/Models/Card.php';
 
-AuthMiddleware::handle();
+AuthMiddleware::requirePermission(Permission::ViewCards);
 
 $cardModel = new Card();
 
@@ -15,12 +14,8 @@ $cards = $cardModel->search($query);
 
 $pageTitle = 'Cards';
 
-require_once __DIR__ . '/../../views/layouts/sidebar.php';
-require_once __DIR__ . '/../../views/layouts/header.php';
-
+ob_start();
 ?>
-
-<main class="content">
 
     <div class="page-header">
 
@@ -114,13 +109,11 @@ require_once __DIR__ . '/../../views/layouts/header.php';
                             </td>
 
                             <td>
+                                    <a href="<?= url('cards/show.php?id=' . (int) $card['id']) ?>">
                                 <strong>
-                                    <?= Security::escape(
-                                        substr($card['card_number'], 0, 6)
-                                        . '******'
-                                        . substr($card['card_number'], -4)
-                                    ) ?>
+                                    <?= Security::escape(Format::cardNumber($card['card_number'])) ?>
                                 </strong>
+                                    </a>
                             </td>
 
                             <td>
@@ -167,4 +160,6 @@ require_once __DIR__ . '/../../views/layouts/header.php';
 
     </div>
 
-</main>
+<?php
+$content = ob_get_clean();
+require __DIR__ . '/../../views/layouts/app.php';

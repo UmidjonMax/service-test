@@ -1,8 +1,6 @@
-
 <?php
 
-require_once __DIR__ . '/../app/Helpers/Session.php';
-require_once __DIR__ . '/../app/Helpers/Security.php';
+require_once __DIR__ . '/../app/bootstrap.php';      // public/*.php
 require_once __DIR__ . '/../app/Models/User.php';
 require_once __DIR__ . '/../app/Services/AuthService.php';
 require_once __DIR__ . '/../app/Controllers/AuthController.php';
@@ -27,16 +25,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Username va password kiriting.';
         } else {
             try {
-                $userModel = new User();
-                $authService = new AuthService($userModel);
+                $authService = new AuthService(new User(), new RateLimiter());
                 $authController = new AuthController($authService);
 
-                if ($authController->login($username, $password)) {
-                    header('Location: dashboard.php');
-                    exit;
-                }
+                $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+                $lockedFor = $authController->lockedFor($username, $ip);
 
-                $error = 'Username yoki password noto‘g‘ri.';
+                if ($lockedFor > 0) {
+                    http_response_code(429);
+                    $error = sprintf(
+                        'Juda ko‘p urinish. %d daqiqadan keyin qayta urinib ko‘ring.',
+                        (int) ceil($lockedFor / 60)
+                    );
+                } elseif ($authController->login($username, $password, $ip)) {
+                    header('Location: ' . url('dashboard.php'));
+                    exit;
+                } else {
+                    $error = 'Username yoki password noto‘g‘ri.';
+                }
             } catch (Throwable $e) {
                 error_log('Login error: ' . $e->getMessage());
                 http_response_code(500);

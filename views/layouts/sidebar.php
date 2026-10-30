@@ -11,7 +11,7 @@
     <nav class="sidebar-nav">
 
         <a
-            href="/service-test-project/public/dashboard.php"
+            href="<?= url('dashboard.php') ?>"
             class="nav-item <?= ($pageTitle ?? '') === 'Dashboard' ? 'active' : '' ?>"
         >
             <span>▦</span>
@@ -19,7 +19,7 @@
         </a>
 
         <a
-            href="/service-test-project/public/cards/index.php"
+            href="<?= url('cards/index.php') ?>"
             class="nav-item <?= ($pageTitle ?? '') === 'Cards' ? 'active' : '' ?>"
         >
             <span>▣</span>
@@ -27,7 +27,7 @@
         </a>
 
         <a
-            href="/service-test-project/public/transactions/index.php"
+            href="<?= url('transactions/index.php') ?>"
             class="nav-item <?= ($pageTitle ?? '') === 'Transactions' ? 'active' : '' ?>"
         >
             <span>↔</span>
@@ -35,7 +35,7 @@
         </a>
 
         <a
-            href="#"
+            href="<?= url('reports/index.php') ?>"
             class="nav-item"
         >
             <span>▤</span>

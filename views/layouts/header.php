@@ -1,24 +1,3 @@
-<head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>
-        <?= Security::escape(
-            $pageTitle ?? 'Card System'
-        ) ?>
-        | Card System
-    </title>
-
-    <link
-        rel="stylesheet"
-        href="/service-test-project/public/css/app.css"
-    >
-</head>
-
 <header class="topbar">
 
     <div class="topbar-title">
@@ -38,25 +17,17 @@
             </span>
 
             <span class="user-role">
-                <?= Security::escape(
-                    $_SESSION['role'] ?? ''
-                ) ?>
+                <?= Security::escape(Auth::role()?->label() ?? 'Unknown role') ?>
             </span>
 
         </div>
 
         <div class="user-avatar">
-            <?= strtoupper(
-                substr(
-                    $_SESSION['username'] ?? 'U',
-                    0,
-                    1
-                )
-            ) ?>
+            <?= Security::escape(mb_strtoupper(mb_substr($_SESSION['username'] ?? 'U', 0, 1))) ?>
         </div>
 
         <form
-            action="/service-test-project/public/logout.php"
+            action="<?= url('logout.php') ?>"
             method="POST"
         >
 

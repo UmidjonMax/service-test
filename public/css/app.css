@@ -415,3 +415,82 @@ td {
     }
 
 }
+/* =========================
+   11. CARD DETAIL
+   ========================= */
+
+.muted {
+    color: var(--text-muted);
+}
+
+.alert-success {
+    background: var(--success-bg);
+    color: var(--success);
+}
+
+.back-link {
+    margin: 0 0 16px;
+}
+
+.card-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.card-detail-number {
+    margin: 0;
+    font-size: 26px;
+    letter-spacing: 0.04em;
+}
+
+.card-detail-header p {
+    margin: 4px 0 0;
+}
+
+.details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 0 0 24px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.details dt {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.details dd {
+    margin: 4px 0 0;
+    font-weight: 500;
+}
+
+.btn {
+    min-height: 40px;
+    padding: 0 18px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: #ffffff;
+}
+
+.btn-success {
+    background: var(--success);
+    color: #ffffff;
+}
+
+.btn:hover {
+    filter: brightness(1.08);
+}

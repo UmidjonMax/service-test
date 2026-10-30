@@ -12,5 +12,12 @@
         "password_hash": "1234",
         "role": "OPERATOR",
         "is_active": true
+    },
+    {
+        "id": 3,
+        "username": "viewer",
+        "password_hash": "$2y$10$QJ/aDlrKXZ/aUKLVS2.fMuAG1ofEML5SjkzKD7hha9h5q6LjM9kB.",
+        "role": "VIEWER",
+        "is_active": true
     }
 ]

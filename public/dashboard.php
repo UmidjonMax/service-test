@@ -1,9 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../app/Helpers/Security.php';
+require_once __DIR__ . '/../app/bootstrap.php';      // public/*.php
 require_once __DIR__ . '/../app/Middleware/AuthMiddleware.php';
 require_once __DIR__ . '/../app/Models/Card.php';
 require_once __DIR__ . '/../app/Models/Transaction.php';
+
 
 AuthMiddleware::handle();
 
@@ -20,6 +21,9 @@ $successLastMinute =
 
 $failedLastMinute =
     $transactionModel->countLastMinuteByStatus('FAILED');
+
+ob_start();
+?>
 
 ?>
 
@@ -43,7 +47,7 @@ $failedLastMinute =
 
     <link
         rel="stylesheet"
-        href="css/app.css"
+        href="<?= url('css/app.css') ?>"
     >
 
 </head>
